@@ -1,0 +1,12 @@
+<md-list>
+  <md-list-item *ngFor="let menuItem of mainLeftMenu">
+    <md-icon md-list-icon>{{menuItem.icon}}</md-icon>
+    <span class="menu-item" md-line>{{menuItem.name}}</span>
+  </md-list-item>
+  <md-divider></md-divider>
+  <md-list-item *ngFor="let menuItem of photoMenu">
+    <md-icon md-list-icon>{{menuItem.icon}}</md-icon>
+    <span class="menu-item" md-line>{{menuItem.name}}</span>
+
+  </md-list-item>
+</md-list>

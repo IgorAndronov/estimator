@@ -1,0 +1,28 @@
+
+.container{
+
+}
+
+.header{
+  background-color: slategray;
+  color: white;
+}
+
+.header md-list{
+  padding: 0px;
+}
+
+.main_body{
+font-size: 10pt;
+}
+.main_body > .side1{
+  background-color:  #fbfbfb;
+}
+.main_body > .side2{
+  background-color: white;
+}
+.main_body > .side3{
+  background-color: white;
+}
+
+
