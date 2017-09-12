@@ -33,5 +33,26 @@ public class EstimateController {
 
     }
 
+    @RequestMapping(value="/users/createTestData", method= RequestMethod.GET)
+    public ResponseEntity<String> saveTestUsersData() {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
+        return  new ResponseEntity<String>(userService.setTestExternalUsersData(), responseHeaders, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value="/users/get/{userId}", method= RequestMethod.GET)
+    public ResponseEntity<String> getTestUsersData(@PathVariable Long userId) {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+
+
+
+        return  new ResponseEntity<String>(userService.getExternalUserById(userId).getName(), responseHeaders, HttpStatus.OK);
+
+    }
 
 }

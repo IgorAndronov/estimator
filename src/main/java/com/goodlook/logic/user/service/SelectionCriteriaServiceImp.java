@@ -1,12 +1,14 @@
 package com.goodlook.logic.user.service;
 
 import com.goodlook.dao.bo.SelectionCriteria;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 /**
  * Created by admin on 10.09.2017.
  */
+@Service
 public class SelectionCriteriaServiceImp {
     static final int PRIORITY_LEVELS=9;
 
