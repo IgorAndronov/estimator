@@ -7,7 +7,9 @@ public class SelectionCriteria {
     private String region;
     private String category;
     private int priority;
-    private int maxNum;
+    private long minNum;
+    private long maxNum;
+    private int recordsCount;
 
     public String getRegion() {
         return region;
@@ -33,11 +35,27 @@ public class SelectionCriteria {
         this.priority = priority;
     }
 
-    public int getMaxNum() {
+    public long getMinNum() {
+        return minNum;
+    }
+
+    public void setMinNum(long minNum) {
+        this.minNum = minNum;
+    }
+
+    public long getMaxNum() {
         return maxNum;
     }
 
-    public void setMaxNum(int maxNum) {
+    public void setMaxNum(long maxNum) {
         this.maxNum = maxNum;
+    }
+
+    public int getRecordsCount() {
+        return recordsCount;
+    }
+
+    public void setRecordsCount(int recordsCount) {
+        this.recordsCount = recordsCount;
     }
 }

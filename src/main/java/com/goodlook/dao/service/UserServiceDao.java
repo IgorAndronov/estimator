@@ -9,8 +9,10 @@ import java.util.List;
  * Created by admin on 10.09.2017.
  */
 
-public interface UserService {
+public interface UserServiceDao {
     public List<ExternalUser> getUsersData(SelectionCriteria selectionCriteria);
+
+    long getUsersCountPerSelectionCriteria(SelectionCriteria selectionCriteria);
 
     String create(ExternalUser externalUser);
 

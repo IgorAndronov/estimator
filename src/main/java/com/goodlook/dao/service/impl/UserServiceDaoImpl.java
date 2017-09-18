@@ -2,7 +2,7 @@ package com.goodlook.dao.service.impl;
 
 import com.goodlook.dao.bo.SelectionCriteria;
 import com.goodlook.dao.bo.entity.ExternalUser;
-import com.goodlook.dao.service.UserService;
+import com.goodlook.dao.service.UserServiceDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceDaoImpl implements UserServiceDao {
 
    @PersistenceContext
    private EntityManager entityManager;
@@ -28,12 +29,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ExternalUser> getUsersData(SelectionCriteria selectionCriteria){
-        Query query=entityManager.createNativeQuery("select * from External_User", ExternalUser.class);
+        Query query=entityManager.createNamedQuery("usersSearchPriority")
+                .setParameter("priority", selectionCriteria.getPriority())
+                .setParameter("MIN_VAL",selectionCriteria.getMinNum())
+                .setParameter("MAX_VAL", selectionCriteria.getMaxNum());
 
         List<ExternalUser> externalUsers = query.getResultList();
 
 
         return externalUsers;
+    }
+
+    @Override
+    public long getUsersCountPerSelectionCriteria(SelectionCriteria selectionCriteria){
+        Query query=entityManager.createNamedQuery("usersCountByPerSelectionCriteria")
+                .setParameter("priority", selectionCriteria.getPriority());
+
+
+        BigInteger count = (BigInteger) query.getSingleResult();
+
+
+        return count.longValue();
     }
 
     @Override
@@ -66,26 +82,31 @@ public class UserServiceImpl implements UserService {
         ExternalUser externalUser = new ExternalUser();
         externalUser.setName("Olga");
         externalUser.setUrlIcon("../../assets/ng1.jpg");
+        externalUser.setPriority(0);
         externalUsers.add(externalUser);
 
         externalUser = new ExternalUser();
         externalUser.setName("Marina");
         externalUser.setUrlIcon("../../assets/ng2.jpg");
+        externalUser.setPriority(1);
         externalUsers.add(externalUser);
 
         externalUser = new ExternalUser();
         externalUser.setName("Svetlana");
         externalUser.setUrlIcon("../../assets/ng3.jpg");
+        externalUser.setPriority(2);
         externalUsers.add(externalUser);
 
         externalUser = new ExternalUser();
         externalUser.setName("Larisa");
         externalUser.setUrlIcon("../../assets/ng4.jpg");
+        externalUser.setPriority(3);
         externalUsers.add(externalUser);
 
         externalUser = new ExternalUser();
         externalUser.setName("Kseniya");
         externalUser.setUrlIcon("../../assets/ng5.jpg");
+        externalUser.setPriority(4);
         externalUsers.add(externalUser);
 
         for(ExternalUser user:externalUsers){

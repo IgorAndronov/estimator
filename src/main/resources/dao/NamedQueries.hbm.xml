@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings version="1.0" xmlns="http://java.sun.com/xml/ns/persistence/orm"
+
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+
+    <named-native-query name="usersSearchPriority" result-class="com.goodlook.dao.bo.entity.ExternalUser">
+        <query>
+            <![CDATA[ select user_id, name, priority, url_icon from
+          (select rownum n, t.* from(
+            SELECT user_id, name, priority, url_icon
+            FROM External_User
+            WHERE priority=:priority)t
+          )
+          where n>=:MIN_VAL AND n <= :MAX_VAL]]>
+
+        </query>
+    </named-native-query>
+
+    <named-native-query name="usersCountByPerSelectionCriteria">
+        <query>
+            <![CDATA[
+            SELECT count(*)
+            FROM External_User
+            WHERE priority=:priority
+           ]]>
+
+        </query>
+    </named-native-query>
+</entity-mappings>
+

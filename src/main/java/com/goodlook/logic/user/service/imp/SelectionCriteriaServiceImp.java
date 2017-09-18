@@ -1,6 +1,7 @@
-package com.goodlook.logic.user.service;
+package com.goodlook.logic.user.service.imp;
 
 import com.goodlook.dao.bo.SelectionCriteria;
+import com.goodlook.logic.user.service.SelectionCriteriaService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,9 +10,10 @@ import java.util.*;
  * Created by admin on 10.09.2017.
  */
 @Service
-public class SelectionCriteriaServiceImp {
+public class SelectionCriteriaServiceImp implements SelectionCriteriaService {
     static final int PRIORITY_LEVELS=9;
 
+    @Override
     public SelectionCriteria getSelectionCriteria(String region){
         SelectionCriteria selectionCriteria = new SelectionCriteria();
         selectionCriteria.setRegion(region);
@@ -21,7 +23,8 @@ public class SelectionCriteriaServiceImp {
         return selectionCriteria;
     }
 
-    private int calculatePriority() {
+    @Override
+    public int calculatePriority() {
 
         List<Integer> values = new ArrayList<Integer>();
         for(int i=PRIORITY_LEVELS; i>=0; i--){
@@ -39,5 +42,15 @@ public class SelectionCriteriaServiceImp {
 
 
         return values.get(randomIndex);
+    }
+
+    @Override
+    public int calculateNextPriority(int currentPriority){
+        return currentPriority+1>PRIORITY_LEVELS? 0:currentPriority+1;
+    }
+
+    @Override
+    public int getAmountOfPriorityLevels(){
+        return PRIORITY_LEVELS;
     }
 }

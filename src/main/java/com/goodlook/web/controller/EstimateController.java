@@ -2,7 +2,9 @@ package com.goodlook.web.controller;
 
 import com.goodlook.dao.bo.SelectionCriteria;
 import com.goodlook.dao.bo.entity.ExternalUser;
-import com.goodlook.dao.service.UserService;
+import com.goodlook.dao.service.UserServiceDao;
+import com.goodlook.logic.user.service.SelectionCriteriaService;
+import com.goodlook.logic.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,12 +26,11 @@ public class EstimateController {
 
     @RequestMapping(value="/users/{user}", method= RequestMethod.GET)
     public ResponseEntity<List<ExternalUser>> getUser(@PathVariable Long user) {
-        SelectionCriteria selectionCriteria = new SelectionCriteria();
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin", "*");
 
-        return  new ResponseEntity<List<ExternalUser>>(userService.getUsersData(selectionCriteria), responseHeaders, HttpStatus.OK);
+        return  new ResponseEntity<List<ExternalUser>>(userService.getUsersData(), responseHeaders, HttpStatus.OK);
 
     }
 

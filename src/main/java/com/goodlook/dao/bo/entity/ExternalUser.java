@@ -15,6 +15,8 @@ public class ExternalUser {
     private String name;
     @Column(name="urlIcon")
     private String urlIcon;
+    @Column(name = "priority")
+    private Integer priority;
 
     public String getName() {
         return name;
@@ -38,5 +40,13 @@ public class ExternalUser {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }
