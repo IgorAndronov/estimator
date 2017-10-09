@@ -8,6 +8,7 @@
   color: white;
 }
 
+
 .header md-list{
   padding: 0px;
 }
@@ -15,13 +16,13 @@
 .main_body{
 font-size: 10pt;
 }
-.main_body > .side1{
+.main_body > .side_left{
   background-color:  #fbfbfb;
 }
-.main_body > .side2{
+.main_body > .side_center{
   background-color: white;
 }
-.main_body > .side3{
+.main_body > .side_right{
   background-color: white;
 }
 

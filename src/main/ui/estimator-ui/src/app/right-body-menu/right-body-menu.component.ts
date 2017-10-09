@@ -14,11 +14,13 @@ export class RightBodyMenuComponent implements OnInit {
 
 
   constructor(private sanitizer: DomSanitizer, private clientsService: ClientsService ) {
+    console.info("!!!right-body-menu constructor");
     this.sanitizer = sanitizer;
 
   }
 
   ngOnInit() {
+    console.info("!!!right-body-menu onInit");
     this.getExternalUsers();
   }
 
