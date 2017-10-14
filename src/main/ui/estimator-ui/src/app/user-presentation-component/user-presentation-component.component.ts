@@ -26,7 +26,7 @@ export class UserPresentationComponentComponent implements OnInit {
     this.clientsService.getClientData(userId).then((response) => {
       for (let entry of response.userFotos){
         this.userFotos.push({name: entry.info,
-          url: this.sanitizer.bypassSecurityTrustStyle('url(' + entry.url + ')')
+          url: this.sanitizer.bypassSecurityTrustUrl(entry.url)
         });
         window.console.info( this.userFotos);
       }

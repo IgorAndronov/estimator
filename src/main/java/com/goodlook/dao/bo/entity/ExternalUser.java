@@ -8,13 +8,15 @@ import java.util.List;
 @Entity
 @Table(name = "External_User")
 public class ExternalUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name="name")
     private String name;
-    @Column(name="urlIcon")
+    @Column(name="url_icon")
     private String urlIcon;
     @Column(name = "priority")
     private Integer priority;
@@ -22,7 +24,7 @@ public class ExternalUser {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "externalUser")
     private List<UserFotoRefs> userFotoRefs;
 
-    @Column(name = "clientMsg")
+    @Column(name = "client_msg")
     private String clientMsg;
 
 

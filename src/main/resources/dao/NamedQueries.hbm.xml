@@ -8,9 +8,9 @@
 
     <named-native-query name="usersSearchPriority" result-class="com.goodlook.dao.bo.entity.ExternalUser">
         <query>
-            <![CDATA[ select user_id, name, priority, url_icon from
+            <![CDATA[ select user_id, client_msg, name, priority, url_icon from
           (select rownum n, t.* from(
-            SELECT user_id, name, priority, url_icon
+            SELECT user_id, client_msg,name, priority, url_icon
             FROM External_User
             WHERE priority=:priority)t
           )

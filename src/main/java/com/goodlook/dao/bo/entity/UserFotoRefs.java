@@ -14,7 +14,7 @@ public class UserFotoRefs {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     ExternalUser externalUser;
 
     @Column(name="url")
