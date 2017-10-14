@@ -2,16 +2,16 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
-md-divider {
+mat-divider {
   border-width: 1px;
   border-color: #e6e6e6;
 }
 
-md-list-item:hover{
+mat-list-item:hover{
   background-color: #f7f7f9;
 }
 
-md-list-item{
+mat-list-item{
   padding: 0;
 }
 

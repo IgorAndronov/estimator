@@ -1,5 +1,10 @@
 package com.goodlook.dao.bo;
 
+import com.goodlook.logic.user.PriorityLevel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by admin on 10.09.2017.
  */
@@ -7,9 +12,13 @@ public class SelectionCriteria {
     private String region;
     private String category;
     private int priority;
+
+    private List<Integer> secondLevelPriorities;
     private long minNum;
     private long maxNum;
     private int recordsCount;
+
+
 
     public String getRegion() {
         return region;
@@ -35,6 +44,10 @@ public class SelectionCriteria {
         this.priority = priority;
     }
 
+    public void setSecondLevelPriorities(List<Integer> secondLevelPriorities) {
+        this.secondLevelPriorities = secondLevelPriorities;
+    }
+
     public long getMinNum() {
         return minNum;
     }
@@ -58,4 +71,13 @@ public class SelectionCriteria {
     public void setRecordsCount(int recordsCount) {
         this.recordsCount = recordsCount;
     }
+
+    public List<Integer> getSecondLevelPriorities() {
+        if(secondLevelPriorities==null){
+            secondLevelPriorities= new ArrayList<Integer>();
+        }
+        return secondLevelPriorities;
+    }
+
+
 }

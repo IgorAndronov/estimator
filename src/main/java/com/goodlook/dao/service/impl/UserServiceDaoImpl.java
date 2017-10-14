@@ -2,6 +2,7 @@ package com.goodlook.dao.service.impl;
 
 import com.goodlook.dao.bo.SelectionCriteria;
 import com.goodlook.dao.bo.entity.ExternalUser;
+import com.goodlook.dao.bo.entity.UserFotoRefs;
 import com.goodlook.dao.service.UserServiceDao;
 import org.springframework.stereotype.Repository;
 
@@ -29,12 +30,35 @@ public class UserServiceDaoImpl implements UserServiceDao {
 
     @Override
     public List<ExternalUser> getUsersData(SelectionCriteria selectionCriteria){
-        Query query=entityManager.createNamedQuery("usersSearchPriority")
-                .setParameter("priority", selectionCriteria.getPriority())
-                .setParameter("MIN_VAL",selectionCriteria.getMinNum())
-                .setParameter("MAX_VAL", selectionCriteria.getMaxNum());
+        List<ExternalUser> externalUsers =new ArrayList<ExternalUser>();
 
-        List<ExternalUser> externalUsers = query.getResultList();
+        Query query=entityManager.createNamedQuery("usersSearchPriority");
+        long minVal=1;
+        long maxVal=selectionCriteria.getRecordsCount();
+
+        if(selectionCriteria.getSecondLevelPriorities()==null ||selectionCriteria.getSecondLevelPriorities().isEmpty()) {
+            minVal = selectionCriteria.getMinNum();
+            maxVal = selectionCriteria.getMaxNum();
+
+            query.setParameter("priority", selectionCriteria.getPriority())
+                    .setParameter("MIN_VAL", minVal)
+                    .setParameter("MAX_VAL", maxVal);
+            externalUsers = query.getResultList();
+        }else{
+            for(int i=0; i< selectionCriteria.getSecondLevelPriorities().size();i++ ){
+                if(i==selectionCriteria.getSecondLevelPriorities().size()-1){
+                    minVal = selectionCriteria.getMinNum();
+                    maxVal = selectionCriteria.getMaxNum();
+                }
+                query.setParameter("priority",selectionCriteria.getSecondLevelPriorities().get(i) )
+                        .setParameter("MIN_VAL",minVal)
+                        .setParameter("MAX_VAL", maxVal);
+                List<ExternalUser> extraList =  query.getResultList();
+                externalUsers.addAll(extraList);
+            }
+        }
+
+
 
 
         return externalUsers;
@@ -42,14 +66,20 @@ public class UserServiceDaoImpl implements UserServiceDao {
 
     @Override
     public long getUsersCountPerSelectionCriteria(SelectionCriteria selectionCriteria){
-        Query query=entityManager.createNamedQuery("usersCountByPerSelectionCriteria")
-                .setParameter("priority", selectionCriteria.getPriority());
+        Query query = entityManager.createNamedQuery("usersCountByPerSelectionCriteria");
+        query.setParameter("priority", selectionCriteria.getPriority());
+
+        long count = ((BigInteger) query.getSingleResult()).longValue();
+
+        if(selectionCriteria.getSecondLevelPriorities()!=null){
+            for(int priority:selectionCriteria.getSecondLevelPriorities() ){
+                query.setParameter("priority", priority);
+                count+= ((BigInteger) query.getSingleResult()).longValue();
+            }
+        }
 
 
-        BigInteger count = (BigInteger) query.getSingleResult();
-
-
-        return count.longValue();
+        return count;
     }
 
     @Override
@@ -64,12 +94,12 @@ public class UserServiceDaoImpl implements UserServiceDao {
     }
 
     @Override
-    public ExternalUser getExternalUserById(long id) {
+    public ExternalUser getExternalUserById(Long id) {
         return entityManager.find(ExternalUser.class, id);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         ExternalUser externalUser = getExternalUserById(id);
         if (externalUser != null) {
             entityManager.remove(externalUser);
@@ -79,11 +109,18 @@ public class UserServiceDaoImpl implements UserServiceDao {
     @Override
     public String setTestExternalUsersData(){
         List<ExternalUser> externalUsers = new ArrayList<ExternalUser>();
+        List<UserFotoRefs> fotoRefs = new ArrayList<UserFotoRefs>();
+
         ExternalUser externalUser = new ExternalUser();
         externalUser.setName("Olga");
         externalUser.setUrlIcon("../../assets/ng1.jpg");
         externalUser.setPriority(0);
         externalUsers.add(externalUser);
+
+        UserFotoRefs userFotoRefs = new UserFotoRefs();
+        userFotoRefs.setUrl("../../assets/ng1.jpg");
+        userFotoRefs.setExternalUser(externalUser);
+        fotoRefs.add(userFotoRefs);
 
         externalUser = new ExternalUser();
         externalUser.setName("Marina");
@@ -91,11 +128,21 @@ public class UserServiceDaoImpl implements UserServiceDao {
         externalUser.setPriority(1);
         externalUsers.add(externalUser);
 
+        userFotoRefs = new UserFotoRefs();
+        userFotoRefs.setUrl("../../assets/ng2.jpg");
+        userFotoRefs.setExternalUser(externalUser);
+        fotoRefs.add(userFotoRefs);
+
         externalUser = new ExternalUser();
         externalUser.setName("Svetlana");
         externalUser.setUrlIcon("../../assets/ng3.jpg");
         externalUser.setPriority(2);
         externalUsers.add(externalUser);
+
+        userFotoRefs = new UserFotoRefs();
+        userFotoRefs.setUrl("../../assets/ng3.jpg");
+        userFotoRefs.setExternalUser(externalUser);
+        fotoRefs.add(userFotoRefs);
 
         externalUser = new ExternalUser();
         externalUser.setName("Larisa");
@@ -103,14 +150,28 @@ public class UserServiceDaoImpl implements UserServiceDao {
         externalUser.setPriority(3);
         externalUsers.add(externalUser);
 
+        userFotoRefs = new UserFotoRefs();
+        userFotoRefs.setUrl("../../assets/ng4.jpg");
+        userFotoRefs.setExternalUser(externalUser);
+        fotoRefs.add(userFotoRefs);
+
         externalUser = new ExternalUser();
         externalUser.setName("Kseniya");
         externalUser.setUrlIcon("../../assets/ng5.jpg");
         externalUser.setPriority(4);
         externalUsers.add(externalUser);
 
+        userFotoRefs = new UserFotoRefs();
+        userFotoRefs.setUrl("../../assets/ng5.jpg");
+        userFotoRefs.setExternalUser(externalUser);
+        fotoRefs.add(userFotoRefs);
+
         for(ExternalUser user:externalUsers){
             entityManager.persist(user);
+        }
+
+        for(UserFotoRefs userFoto:fotoRefs){
+            entityManager.persist(userFoto);
         }
 
 

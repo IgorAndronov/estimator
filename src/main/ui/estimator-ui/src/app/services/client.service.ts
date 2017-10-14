@@ -6,19 +6,31 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ClientsService {
 
-  private url = 'http://localhost:8080/api/users/123';
+  private url = 'http://localhost:8080/api/';
 
   constructor(private http: Http) { }
 
-  getClients(): Promise<Client[]> {
-    return this.http.get(this.url)
+  getClientsIcons(): Promise<Client[]> {
+    return this.http.get(this.url + "users/123")
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
+  getClientData(userId): Promise<Client> {
+    return this.http.get(this.url + "users/get/" + userId)
+      .toPromise()
+      .then(this.handleResponseSingle)
+      .catch(this.handleError);
+  }
+
   private handleResponse(response): Client[] {
     return response.json() as Client[];
+
+  }
+
+  private handleResponseSingle(response): Client {
+    return response.json() as Client;
 
   }
 

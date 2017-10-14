@@ -1,6 +1,7 @@
 package com.goodlook.logic.user.service.imp;
 
 import com.goodlook.dao.bo.SelectionCriteria;
+import com.goodlook.logic.user.PriorityLevel;
 import com.goodlook.logic.user.service.SelectionCriteriaService;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,13 @@ import java.util.*;
  */
 @Service
 public class SelectionCriteriaServiceImp implements SelectionCriteriaService {
-    static final int PRIORITY_LEVELS=9;
+    static final int PRIORITY_LEVELS= 9;
 
     @Override
     public SelectionCriteria getSelectionCriteria(String region){
         SelectionCriteria selectionCriteria = new SelectionCriteria();
         selectionCriteria.setRegion(region);
-        selectionCriteria.setMaxNum(2);
+        //selectionCriteria.setMaxNum(2);
         selectionCriteria.setPriority(calculatePriority());
 
         return selectionCriteria;

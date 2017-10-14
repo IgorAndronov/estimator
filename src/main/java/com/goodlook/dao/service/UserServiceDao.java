@@ -18,9 +18,9 @@ public interface UserServiceDao {
 
     void update(ExternalUser externalUser);
 
-    ExternalUser getExternalUserById(long id);
+    ExternalUser getExternalUserById(Long id);
 
-    void delete(long id);
+    void delete(Long id);
 
     String setTestExternalUsersData();
 }

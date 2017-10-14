@@ -3,6 +3,7 @@ package com.goodlook.logic.user.service.imp;
 import com.goodlook.dao.bo.SelectionCriteria;
 import com.goodlook.dao.bo.entity.ExternalUser;
 import com.goodlook.dao.service.UserServiceDao;
+import com.goodlook.logic.user.PriorityLevel;
 import com.goodlook.logic.user.service.SelectionCriteriaService;
 import com.goodlook.logic.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     SelectionCriteriaService selectionCriteriaService;
 
     @Override
-    public List<ExternalUser> getUsersData(){
+    public List<ExternalUser> getExternalUserData(){
 
         SelectionCriteria selectionCriteria = new SelectionCriteria();
         int priorityLevel = selectionCriteriaService.calculatePriority();
@@ -47,17 +48,31 @@ public class UserServiceImpl implements UserService {
     }
 
     private void calculateMinMaxNum(SelectionCriteria selectionCriteria) {
-        long dbCount = userServiceDao.getUsersCountPerSelectionCriteria(selectionCriteria);
+        long dbCount =0;
+        long dbCountPrevLevel=0;
+        int nextPriorityLevel=selectionCriteria.getPriority();
         int displayRecordsCount = selectionCriteria.getRecordsCount();
-        long ammountOfSlots = (long) Math.floor(dbCount/displayRecordsCount);
-        int remainCount = (int)dbCount%displayRecordsCount;
+        for(int i=0;i<=selectionCriteriaService.getAmountOfPriorityLevels();i++){ //restrict ammount of iterations to avoid infinit loop
+            dbCount = userServiceDao.getUsersCountPerSelectionCriteria(selectionCriteria);
+            if(dbCount<displayRecordsCount){
+                nextPriorityLevel=selectionCriteriaService.calculateNextPriority(nextPriorityLevel);
+                selectionCriteria.getSecondLevelPriorities().add(nextPriorityLevel);
+                dbCountPrevLevel=dbCount;
+            }else{
+                break;
+            }
+        }
+
+        displayRecordsCount=((Long)(new Long(displayRecordsCount)-dbCountPrevLevel)).intValue();
+        long ammountOfSlots = (long) Math.floor((dbCount-dbCountPrevLevel)/displayRecordsCount);
+        int remainCount = (int)(dbCount-dbCountPrevLevel)%displayRecordsCount;
         if(remainCount>0){
             ammountOfSlots++;
         }
         long randomSlotIndex = Math.round(Math.random()*(ammountOfSlots-1));
         long minNum,maxNum=0L;
         if(randomSlotIndex==ammountOfSlots-1){
-            maxNum=dbCount;
+            maxNum=dbCount-dbCountPrevLevel;
             minNum=maxNum-displayRecordsCount;
 
         }else{

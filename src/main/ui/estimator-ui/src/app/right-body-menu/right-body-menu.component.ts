@@ -25,7 +25,7 @@ export class RightBodyMenuComponent implements OnInit {
   }
 
   getExternalUsers(): void {
-    this.clientsService.getClients().then((response) => {
+    this.clientsService.getClientsIcons().then((response) => {
       for (let entry of response){
         this.mainRightMenu.push({name: entry.name,
                                  icon: this.sanitizer.bypassSecurityTrustStyle('url(' + entry.urlIcon + ')')

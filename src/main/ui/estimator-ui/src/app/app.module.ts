@@ -8,15 +8,16 @@ import { RightBodyMenuComponent } from './right-body-menu/right-body-menu.compon
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {MdNativeDateModule} from '@angular/material';
 import {AppMaterialComponentsModule} from './app-material-components/app-material-components.module';
+import { UserPresentationComponentComponent } from './user-presentation-component/user-presentation-component.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LeftBodyMenuComponent,
-    RightBodyMenuComponent
+    RightBodyMenuComponent,
+    UserPresentationComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +25,6 @@ import {AppMaterialComponentsModule} from './app-material-components/app-materia
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    MdNativeDateModule,
     ReactiveFormsModule,
     AppMaterialComponentsModule
   ],

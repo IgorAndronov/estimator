@@ -8,7 +8,7 @@ import java.util.List;
  * Created by iandronov on 13.09.2017.
  */
 public interface UserService {
-    List<ExternalUser> getUsersData();
+    List<ExternalUser> getExternalUserData();
     String create(ExternalUser externalUser);
     String setTestExternalUsersData();
     ExternalUser getExternalUserById(long id);

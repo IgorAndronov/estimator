@@ -24,7 +24,7 @@
             <![CDATA[
             SELECT count(*)
             FROM External_User
-            WHERE priority=:priority
+            WHERE priority =:priority
            ]]>
 
         </query>
