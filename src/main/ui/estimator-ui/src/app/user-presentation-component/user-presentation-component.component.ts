@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 import {ClientsService} from '../services/client.service';
 
@@ -6,11 +6,11 @@ import {ClientsService} from '../services/client.service';
 @Component({
   selector: 'app-user-presentation-component',
   templateUrl: './user-presentation-component.component.html',
-  styleUrls: ['./user-presentation-component.component.css'],
-  providers: [ClientsService]
+  styleUrls: ['./user-presentation-component.component.css']
 })
 export class UserPresentationComponentComponent implements OnInit {
-  userFotos= [];
+   userFotos= [];
+
 
   constructor(private sanitizer: DomSanitizer, private clientsService: ClientsService ) {
     console.info("!!!right-body-menu constructor");
@@ -19,20 +19,11 @@ export class UserPresentationComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserFoto('1');
+    this.userFotos=this.clientsService.getSelectedUserFotos();
+    window.console.info("!!! this = "+this);
   }
 
-  getUserFoto(userId): void {
-    this.clientsService.getClientData(userId).then((response) => {
-      for (let entry of response.userFotos){
-        this.userFotos.push({name: entry.info,
-          url: this.sanitizer.bypassSecurityTrustUrl(entry.url)
-        });
-        window.console.info( this.userFotos);
-      }
 
-    });
-  }
 
 
 

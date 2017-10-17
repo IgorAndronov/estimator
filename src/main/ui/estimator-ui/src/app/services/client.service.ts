@@ -6,6 +6,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ClientsService {
 
+  private userFotos= [];
+
   private url = 'http://localhost:8080/api/';
 
   constructor(private http: Http) { }
@@ -39,5 +41,12 @@ export class ClientsService {
     return Promise.reject(error.message || error);
   }
 
+  getSelectedUserFotos(){
+    return this.userFotos;
+  }
 
+
+  setSelectedUserFotos(userFotos) {
+    this.userFotos = userFotos;
+  }
 }

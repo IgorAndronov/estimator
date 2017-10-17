@@ -5,7 +5,7 @@ import {FotoData} from "./FotoData";
 
 
 export class Client {
-  id: number;
+  userId: number;
   name: string;
   urlIcon: string;
   userFotos: FotoData[];

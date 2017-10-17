@@ -1,6 +1,6 @@
 <mat-list>
 
-  <mat-list-item *ngFor="let menuItem of mainRightMenu">
+  <mat-list-item *ngFor="let menuItem of mainRightMenu" (click)="onSelect(menuItem)">
 
       <div [style.background-image]="menuItem.icon"></div>
 

@@ -5,3 +5,7 @@ body{
   background-color: #fbfbfb;
   margin: 0;
 }
+
+app-user-presentation-component .mat-list-item-content{
+  height: inherit !important;
+}
