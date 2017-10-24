@@ -6,5 +6,5 @@ spring:
     config:
       server:
         git:
-          uri: file:///D:/Igor/Projects/estimator
+          uri: https://github.com/IgorAndronov/IcreditDb
           default-label: master
