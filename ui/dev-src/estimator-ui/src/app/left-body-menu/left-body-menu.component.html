@@ -1,0 +1,12 @@
+<mat-list>
+  <mat-list-item *ngFor="let menuItem of mainLeftMenu">
+    <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
+    <span class="menu-item" mat-line>{{menuItem.name}}</span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item *ngFor="let menuItem of photoMenu">
+    <mat-icon mat-list-icon>{{menuItem.icon}}</mat-icon>
+    <span class="menu-item" mat-line>{{menuItem.name}}</span>
+
+  </mat-list-item>
+</mat-list>

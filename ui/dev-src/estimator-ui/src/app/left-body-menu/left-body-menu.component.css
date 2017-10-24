@@ -1,0 +1,17 @@
+.mat-list-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+mat-divider {
+  border-width: 1px;
+  border-color: #e6e6e6;
+}
+
+mat-list-item:hover{
+  background-color: #f7f7f9;
+}
+
+mat-list-item{
+  padding: 0;
+}
+
