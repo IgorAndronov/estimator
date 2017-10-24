@@ -6,4 +6,5 @@ spring:
     config:
       server:
         git:
-           uri:file:///D:/Igor/Projects/estimator/config/src/main/resources
+          uri: file:///D:/Igor/Projects/estimator
+          default-label: master
