@@ -13,7 +13,7 @@ export class ClientsService {
   constructor(private http: Http) { }
 
   getClientsIcons(): Promise<Client[]> {
-    return this.http.get(this.url + "users/123")
+    return this.http.get(this.url + "users/")
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
