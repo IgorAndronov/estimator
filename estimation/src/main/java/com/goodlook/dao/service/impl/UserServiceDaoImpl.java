@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -111,60 +112,17 @@ public class UserServiceDaoImpl implements UserServiceDao {
         List<ExternalUser> externalUsers = new ArrayList<ExternalUser>();
         List<UserFotoRefs> fotoRefs = new ArrayList<UserFotoRefs>();
 
-        ExternalUser externalUser = new ExternalUser();
-        externalUser.setName("Olga");
-        externalUser.setUrlIcon("../../assets/ng1.jpg");
-        externalUser.setPriority(0);
-        externalUsers.add(externalUser);
+        setTestUserData(externalUsers,fotoRefs,"Olga","../../assets/ng1.jpg",
+                        Arrays.asList("../../assets/ng1.jpg", "../../assets/ng1.jpg", "../../assets/ng1.jpg", "../../assets/ng1.jpg"),0);
+        setTestUserData(externalUsers,fotoRefs,"Sveta","../../assets/ng2.jpg",
+                Arrays.asList("../../assets/ng1.jpg", "../../assets/ng2.jpg", "../../assets/ng2.jpg", "../../assets/ng2.jpg"),0);
+        setTestUserData(externalUsers,fotoRefs,"Marina","../../assets/ng3.jpg",
+                Arrays.asList("../../assets/ng1.jpg", "../../assets/ng3.jpg", "../../assets/ng3.jpg", "../../assets/ng3.jpg"),1);
+        setTestUserData(externalUsers,fotoRefs,"Oksana","../../assets/ng4.jpg",
+                Arrays.asList("../../assets/ng1.jpg", "../../assets/ng4.jpg", "../../assets/ng4.jpg", "../../assets/ng4.jpg"),1);
+        setTestUserData(externalUsers,fotoRefs,"Natasha","../../assets/ng5.jpg",
+                Arrays.asList("../../assets/ng1.jpg", "../../assets/ng5.jpg", "../../assets/ng5.jpg", "../../assets/ng5.jpg"),1);
 
-        UserFotoRefs userFotoRefs = new UserFotoRefs();
-        userFotoRefs.setUrl("../../assets/ng1.jpg");
-        userFotoRefs.setExternalUser(externalUser);
-        fotoRefs.add(userFotoRefs);
-
-        externalUser = new ExternalUser();
-        externalUser.setName("Marina");
-        externalUser.setUrlIcon("../../assets/ng2.jpg");
-        externalUser.setPriority(1);
-        externalUsers.add(externalUser);
-
-        userFotoRefs = new UserFotoRefs();
-        userFotoRefs.setUrl("../../assets/ng2.jpg");
-        userFotoRefs.setExternalUser(externalUser);
-        fotoRefs.add(userFotoRefs);
-
-        externalUser = new ExternalUser();
-        externalUser.setName("Svetlana");
-        externalUser.setUrlIcon("../../assets/ng3.jpg");
-        externalUser.setPriority(2);
-        externalUsers.add(externalUser);
-
-        userFotoRefs = new UserFotoRefs();
-        userFotoRefs.setUrl("../../assets/ng3.jpg");
-        userFotoRefs.setExternalUser(externalUser);
-        fotoRefs.add(userFotoRefs);
-
-        externalUser = new ExternalUser();
-        externalUser.setName("Larisa");
-        externalUser.setUrlIcon("../../assets/ng4.jpg");
-        externalUser.setPriority(3);
-        externalUsers.add(externalUser);
-
-        userFotoRefs = new UserFotoRefs();
-        userFotoRefs.setUrl("../../assets/ng4.jpg");
-        userFotoRefs.setExternalUser(externalUser);
-        fotoRefs.add(userFotoRefs);
-
-        externalUser = new ExternalUser();
-        externalUser.setName("Kseniya");
-        externalUser.setUrlIcon("../../assets/ng5.jpg");
-        externalUser.setPriority(4);
-        externalUsers.add(externalUser);
-
-        userFotoRefs = new UserFotoRefs();
-        userFotoRefs.setUrl("../../assets/ng5.jpg");
-        userFotoRefs.setExternalUser(externalUser);
-        fotoRefs.add(userFotoRefs);
 
         for(ExternalUser user:externalUsers){
             entityManager.persist(user);
@@ -176,6 +134,28 @@ public class UserServiceDaoImpl implements UserServiceDao {
 
 
         return ""+externalUsers.size();
+
+    }
+
+    void setTestUserData(List<ExternalUser> externalUsers ,List<UserFotoRefs> userFotoRefsList, String name, String avatar, List<String>fotos, int priority){
+        ExternalUser externalUser = new ExternalUser();
+        externalUser.setName(name);
+        externalUser.setUrlIcon(avatar);
+        externalUser.setPriority(priority);
+        externalUsers.add(externalUser);
+
+        setTestUsersFoto(externalUser,userFotoRefsList,fotos);
+
+    }
+
+    void setTestUsersFoto(ExternalUser externalUser,List<UserFotoRefs> userFotoRefsList, List<String> fotos){
+        for(String foto:fotos){
+            UserFotoRefs userFotoRefs = new UserFotoRefs();
+            userFotoRefs.setUrl(foto);
+            userFotoRefs.setInfo("Estimate, please!!!");
+            userFotoRefs.setExternalUser(externalUser);
+            userFotoRefsList.add(userFotoRefs);
+        }
 
     }
 }
